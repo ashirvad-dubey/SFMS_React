@@ -1,0 +1,32 @@
+.g-3, .gy-3 {
+    --bs-gutter-y: 1rem;
+    padding: 1rem !important;
+        --bs-gutter-x: 5rem !important;
+
+    
+}
+.row g-3 mb-4{
+    color: red !important;
+}
+.col-md-3{
+    color:  red !important; 
+    font-size: 1.5rem !important;
+}
+.sign{
+     color:  red !important; 
+    font-size: 1.5rem !important;
+
+}
+hr{
+    color: red !important;
+    width: 30%;
+    margin: 4%;
+}
+.submit{
+    height: 10px !important;
+    font-size: 1.5rem;
+    margin-left: 500px;
+}
+h2{
+    font-size: 2rem;
+}

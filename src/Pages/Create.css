@@ -1,0 +1,63 @@
+.page-wrapper {
+  height: 100vh;
+  width: 100%;
+  background: radial-gradient(circle, #fbd3e9 0%, #bb377d 100%);
+}
+.create-account-wrapper {
+  background: radial-gradient(circle, #fbd3e9 0%, #bb377d 100%);
+  padding: 30px;
+  border-radius: 25px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.bck {
+  width: 70px;
+  margin-left: 1%;
+  margin-bottom: -5%;
+  cursor: pointer;
+}
+
+.create-account-box {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+}
+
+.create-account-box h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.create-form input {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.create-form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #6a11cb;
+  background-image: linear-gradient(315deg, #6a11cb 0%, #2575fc 74%);
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.create-form button:hover {
+  opacity: 0.9;
+}
