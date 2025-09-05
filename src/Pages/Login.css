@@ -1,87 +1,38 @@
-/* Outer glowing border */
+
 .outer-wrapper {
-  height: 100vh;
+  min-height: 100vh; 
   display: flex;
-    box-shadow: inset 0 0 60px rgb(222, 35, 35);
   justify-content: center;
   align-items: center;
-  /*background: #5f35f0;*/
-  background-color: linear-gradient(#6a11cb, #2575fc);
-  padding: 20px;
+  box-shadow: inset 0 0 60px rgb(222, 35, 35);
+  background: linear-gradient(#6a11cb, #2575fc);
+  box-sizing: border-box;
 }
 
-/* Light blue container */
 .inner-wrapper {
- /* background-color: #5f35f0;*/
- background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.2);
   box-shadow: 0 0 60px #faf190;
   border-radius: 20px;
   border: 2px solid white;
   padding: 2rem;
   text-align: center;
-  width: 90%;
-  height: 100%;
+  width: 100%;
+  max-width: 480px; 
+  box-sizing: border-box;
 }
 
-/* Login box */
 .login-box {
-    width: 100%;
-    height: 100%;
-  /*background: #02b5eb;*/
-  background-color: e0f7fa ;
+  background-color: #e99ff6;
   border: 2px solid white;
   border-radius: 20px;
   padding: 2rem;
   box-shadow: 0 0 60px #faf190;
   margin-bottom: 2rem;
-}
-.login-2-box{
-    width: 100%;
-    height: 100%;
-  /*background: #07b2e697;*/
-  background-color:rgb(149, 234, 249);
-  border: 2px solid white;
-  border-radius: 20px;
-  padding: 2rem;
-  box-shadow: 0 0 60px #faf190;
-  margin-bottom: 2rem;
-}
-.login-3-box{
-    width: 100%;
-    height: 100%;
- /*background: #f1f163;*/
- background-color: #e99ff6 ;
-  border: 2px solid white;
-  border-radius: 20px;
-  padding: 2rem;
-box-shadow: 0 0 60px #faf190;
-  margin-bottom: 2rem;
-}
-.login-4-box{
-    width: 100%;
-    height: 100%;
- /*background: #f1f163;*/
- background-color: #e99ff6 ;
-  border: 2px solid white;
-  border-radius: 20px;
-  padding: 2rem;
-box-shadow: 0 0 60px #faf190;
-  margin-bottom: 2rem;
-}
-.login-5-box{
-    width: 100%;
-    height: 100%;
- /*background: #f1f163;*/
- background-color: #e99ff6 ;
-  border: 2px solid white;
-  border-radius: 20px;
-  padding: 2rem;
-box-shadow: 0 0 60px #faf190;
-  margin-bottom: 2rem;
+  box-sizing: border-box;
 }
 
 .login-box h2 {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   margin-bottom: 1rem;
 }
 
@@ -89,56 +40,82 @@ box-shadow: 0 0 60px #faf190;
   font-family: monospace;
 }
 
-/* Input */
-.login-box input {
-  width: 70%;
+.login-box input,
+#sbtn{
+  width: 100%;
+  max-width: 100%; 
   padding: 0.8rem;
   border-radius: 25px;
-  border: none;
-  margin: 1rem 0;
   font-size: 1rem;
   outline: none;
+  box-sizing: border-box;
+  margin: 0.5rem;
 }
 
-/* Submit button */
-.sbtn {
-  width: 40%;
-  padding: 0.8rem;
-  border-radius: 25px;
+.signup-text {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #374151;
+}
+
+#signup-text a {
+  color: #2563EB;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  cursor:"pointer";
+   color:"blue"
+}
+
+#signup-text a:hover {
+  color: #1E40AF;
+  text-decoration: underline;
+  cursor:"pointer";
+   color:"blue"
+}
+#sbtn {
   background: #007bff;
   color: white;
   border: none;
-  font-size: 1rem;
   box-shadow: 0 0 10px white;
   cursor: pointer;
+  margin-top: 1rem;
 }
 
-/* Bottom section */
 .bottom-box {
-        width: 40%;
+  width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin-top: -13%;
-  margin-left: 6%;
-  
+  gap: 0.5rem;
+  margin-top: 1rem;
 }
-.create-btn {
-    width: 60%;
-  padding: 0.8rem;
-  border-radius: 25px;
-  border: 2px solid white;
-  background-color: #e99ff6;
-  font-size: 1rem;
-  cursor: pointer;  
-  box-shadow: 0 0 60px white;
-color: black;
-  transition: 0.3s ease;
 
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .inner-wrapper {
+    padding: 1.5rem;
+    max-width: 90%;
+  }
+  .login-box h2 {
+    font-size: 1.5rem;
+  }
 }
-.create-btn:hover {
-  background-color: red;
-  color: white;
+
+@media (max-width: 480px) {
+  .inner-wrapper {
+    padding: 1rem;
+    max-width: 95%;
+  }
+  .login-box h2 {
+    font-size: 1.4rem;
+  }
+  .login-box,
+  #sbtn,
+  #create-btn {
+    padding: 0.7rem;
+  }
 }

@@ -1,72 +1,68 @@
-import {Link, } from 'react-router-dom';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
+import {Link, useLocation, } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
+import Nav from 'react-bootstrap/Nav';
 import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import Navbar from 'react-bootstrap/Navbar';
 import shutdown from '../assets/shutdown.png'
-import { useEffect } from 'react';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 import './Navbr.css';
-import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-export default function Navbr() {
+export default function Navbr(){
 
+      const[name,setName]=useState('');
+      const location=useLocation();
+      const navigate=useNavigate();
 
+      const handlelogout=()=>{
+        localStorage.clear();
+        navigate('/');
+      }
 
-   const [name, setName] = useState("");
-
-  const navigate=useNavigate();
-  const location = useLocation();
-  if(location.pathname==='/'){
-    return null;
-  }
-  
-  const handlelogout = () => {
-  localStorage.clear();   
-  navigate('/');          
-};
-
-
- useEffect(() => {
-    const storedName = localStorage.getItem("name");
+      useEffect(()=>{
+        const storedName = localStorage.getItem("name");
     if (storedName) {
       setName(storedName);
     }
-  }, []);
+      },[]);
+
+     if(location.pathname==='/'){return null;}
+
+  if(location.pathname==='/Create'){return null;}
 
 
-  
 
 
+  return(
 
+<>
 
-  return (
-    <>
-     <Navbar collapseOnSelect expand="lg" className="custom-navbar" sticky="top">
+    <Navbar expand="lg" className="bg-body-tertiary ">
       <Container fluid>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        
-        <Navbar.Collapse
-          id="responsive-navbar-nav"
-          className="w-100 d-flex align-items-center justify-content-between"
-        >
-          {/* LEFT — main links */}
-          <Nav className="nav-links ms-lg-4">
+        <Navbar.Brand href="#"><h1 style={{fontFamily:"cursive"}}><b>Welcome {name}</b></h1></Navbar.Brand>
+        <Navbar.Toggle aria-controls="navbarScroll" />
+        <Navbar.Collapse id="navbarScroll">
+          <Nav
+            className="me-auto my-2 my-lg-0"
+            style={{ maxHeight: '100px' }}
+            navbarScroll
+          >
             <Link to="/home" className="nav-item">Home</Link>
-         {/*}   <Link to="/addfess" className="nav-item">Add student</Link>{*/}
-            <Link to="/viewrecord" className="nav-item">View Student</Link>
-            <Link to="/searchrecord" className="nav-item">Edit/Update student</Link>
-            <Link to="/viewreport" className="nav-item">View Course</Link>
-          </Nav>
-             <Navbar.Brand className='dashboard' href="#home"><h1><b>{name}</b></h1></Navbar.Brand>
+            <Link to="/viewstudent" className="nav-item">View Student</Link>
+            <Link to="/updatestudent" className="nav-item">Edit/Update student</Link>
+            <Link to="/viewcourse" className="nav-item">View Course</Link>
 
-          {/* RIGHT — logout */}
+            
+          </Nav>
           <img src={shutdown} alt=" Logout" onClick={handlelogout}  style={{width:'50px',cursor:'pointer',borderRadius:'8px'}}/>
         </Navbar.Collapse>
       </Container>
-    </Navbar>   </>
-  );
+    </Navbar>
+
+    
+</>
+
+  )
 }

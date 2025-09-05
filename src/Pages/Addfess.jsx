@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import './Addfess.css';
-export default function Addfess() {
-   const navigate=useNavigate();
+import axios from 'axios';
+<addfess className="css"></addfess>
 
-
-  const[recpt,setRecpt]=useState('')
+export default function Addfess(){
+     const navigate=useNavigate();
+const[recpt,setRecpt]=useState('')
   const[date,setDate]=useState('')
   const[course,setCourse]=useState('')
   const[payment,setPayment]=useState('')
@@ -20,8 +24,9 @@ export default function Addfess() {
   const[amt,setAmt]=useState('')
   const[cgst,setCgst]=useState('')
   const[sgst,setSgst]=useState('')
-  const[tolw,setTotw]=useState('')
   const[tolamt,setTolamt]=useState('')
+  const[error,setError]=useState({date:"",course:"",payment:"",number:"",sname:"",fory:" ",
+    forto:"",tolamt:""});
 
   const handlerecpt=(e)=>{setRecpt(e.target.value);}
   const handledate=(e)=>{setDate(e.target.value);}
@@ -36,8 +41,19 @@ export default function Addfess() {
   const handleamount=(e)=>{setAmt(e.target.value);}
   const handlecgstin=(e)=>{setCgst(e.target.value);}
   const handlesgstin=(e)=>{setSgst(e.target.value);}
-  const handletotalwo=(e)=>{setTotw(e.target.value);}
   const handletotalamt=(e)=>{setTolamt(e.target.value);}
+
+const Validationdate=()=>{if(!date){return "Enter Date"}return "";}
+const ValidationCourse=()=>{if(!course){return "Enter Course"}return "";}
+const ValidationPayment=()=>{if(!payment){return "Enter Payment Mode"}return "";}
+const ValidationNumber=()=>{if(!number){return "Enter Mobile Number"}return "";}
+const Validationsname=()=>{if(!sname){return "Enter Sutudent Name"}return "";}
+const Validationfory=()=>{if(!fory){return "Enter For Date"}return "";}
+const Validationforto=()=>{if(!forto){return "Enter To Date"}return "";}
+const Validationtolamt=()=>{if(!tolamt){return "Enter Amount"}return "";}
+
+
+
 
 
   
@@ -46,6 +62,22 @@ export default function Addfess() {
 
 const submit=(e)=>{
   e.preventDefault();
+  const Dateerror=Validationdate();
+  const Courseerror=ValidationCourse();
+  const Paymenterror=ValidationPayment();
+  const Numbererror=ValidationNumber();
+  const Snameerror=Validationsname();
+  const Foryerror=Validationfory();
+  const Fortoerror=Validationforto();
+  const Tolamterror=Validationtolamt();
+  
+if(!date || !course || !payment || !number || !sname || !fory || !forto || !tolamt){
+  setError({date: Dateerror,course: Courseerror,payment:Paymenterror,number:Numbererror,
+    sname:Snameerror,fory: Foryerror,forto: Fortoerror,tolamt: Tolamterror})
+    return;
+}
+
+
 
 const dt={
      receipt:recpt,
@@ -108,107 +140,207 @@ const handleamount1 = (e) => {
   setTolamt(total);
 };
 
-  return (
+  return(
     <>
-   <div className="container mt-5">
-     <div className='receiptl'><h2 className="text-center text-primary mb-4">Payment Receipt</h2></div>
-      <form>
-        {/* Row 1 */}
-        <div className="row g-3 mb-3">
-          <div className="col-md-3">
-            <label className="form-label">Receipt No:</label>
-            <input type="text" value={recpt} onChange={handlerecpt} className="form-control rounded-3" />
-          </div>
-          <div className="col-md-3">
-            <label className="form-label">Date:</label>
-            <input type="date" onChange={handledate} className="form-control rounded-3" />
-          </div>
-          <div className="col-md-3">
-           <label className="form-label">Course:</label>
-            <select onChange={handlecourse} className="form-select rounded-3 ">
-              <option>Select Course</option>
-              <option>Java</option>
-              <option>C</option>
-              <option>c++</option>
-              <option>full Strack</option>
-            </select>
-          </div>
-          <div className="col-md-3">
-            <label className="form-label">Mode of Payment:</label>
-            <select onChange={handlepayment} className="form-select rounded-3">
-              <option>Select payment mode</option>
-              <option>Cash</option>
-              <option>Online</option>
-            </select>
-          </div>
-        </div>
+    
+    <div className="addfess_body">
 
-        {/* Row 2 */}
-        <div className="row g-3 mb-3">
-          <div className="col-md-3">
-            <label  className="form-label">mobile No:</label>
-            <input onChange={handlemobile} type="text" className="form-control rounded-3" />
-          </div>
-          
-          <div className="col-md-3">
-            <label className="form-label">GSTIN:</label>
-            <input onChange={handlegst} type="text" className="form-control rounded-3" />
-          </div>
-          <div className="col-md-3">
-            <label className="form-label">Receiver Name:</label>
-            <input onChange={handlename} type="text" className="form-control rounded-3" />
-          </div> 
-        </div>
+    <Container>
+        <div className="heading"><h1>Add Student Page</h1></div>
+    </Container>
 
-        {/* Row 3 */}
-        <div className="row g-3 mb-3">
-          <div className="col-md-3">
-            <label className="form-label">From Year:</label>
-            <input onChange={handlefromy} type="date" className="form-control rounded-3" />
-          </div>
-          <div className="col-md-3">
-            <label className="form-label">To:</label>
-            <input onChange={handletoyear} type="date" className="form-control rounded-3" /> 
-          </div>
-          <div className="col-md-3">
-            <label className="form-label">Roll No:</label>
-            <input value={roll} onChange={handlerollno} type="text" className="form-control rounded-3" />
-          </div>
-          <div className="col-md-3">
-            <label className="form-label">Amount:</label>
-            <input onChange={handleamount1} type="number" className="form-control rounded-3" />
-          </div>
-        </div>
+    <Container style={{backgroundColor:"burlywood",borderRadius:"25px"}}>
+      <Row>
+        <Col>
+        
 
-        {/* Row 4 */}
-        <div className="row g-3 mb-4">
-          <div className="col-md-3">
-            <label className="form-label">CGST 7%:</label>
-            <input onChange={handlecgstin} value={cgst} type="text" className="form-control rounded-3" />
-          </div>
-          <div className="col-md-3">
-            <label className="form-label">SGST 7%:</label>
-            <input onChange={handlesgstin} value={sgst} type="text" className="form-control rounded-3" />
-          </div>
-          <div className="col-md-3">
-            <label className="form-label">Total in Words:</label>
-            <input onChange={handletotalwo} type="text" className="form-control rounded-3" />
-          </div>
-          <div className="col-md-3">
-            <label className="form-label">Total Amount:</label>
-            <input onChange={handletotalamt} value={tolamt} type="text" className="form-control rounded-3" />
-          </div>
-        </div>
-<br />
-          <label className="sign">Recevier signature:-</label>
-          <hr />
-        <div className="submit">
-          <button type="submit" onClick={submit} className="btn btn-primary px-5 rounded-pill">
-            Submit
-          </button>
-        </div>
-      </form>
-    </div>
+    <Form>
+      <Form.Group className="mb-3" id='add_fess_lbl' controlId="exampleForm.ControlInput1">
+        <Form.Label>Receipt No:-</Form.Label>
+        <Form.Control id='add_fess_input' value={recpt} onChange={handlerecpt} type="text" placeholder="Enter Receipt Number" />
+      </Form.Group>
+    </Form>        
+        </Col>
+        <Col >
+        
+            <Form>
+      <Form.Group className="mb-3" id='add_fess_lbl' controlId="exampleForm.ControlInput1">
+        <Form.Label>Roll No:-</Form.Label>
+        <Form.Control id='add_fess_input'value={roll} onChange={handlerollno} type="text" placeholder="Enter Roll Number" />
+      </Form.Group>
+    </Form>        
+
+        
+        
+        </Col>
+        <Col>
+        
+            <Form>
+      <Form.Group className="mb-3" id='add_fess_lbl' controlId="exampleForm.ControlInput1">
+        <Form.Label>Date:-</Form.Label>
+        <Form.Control onChange={handledate} id='add_fess_input' type="date" />
+      </Form.Group>
+    </Form>        
+
+        
+        
+        </Col>
+        <Col>
+        
+        
+            <Form>
+      <Form.Group className="mb-3" id='add_fess_lbl' controlId="exampleForm.ControlInput1">
+        <Form.Label>Course:-</Form.Label>
+    <Form.Select id='add_fess_input' onChange={handlecourse} aria-label="Default select example">
+      <option>Select Course</option>
+      <option value="Java">Java</option>
+      <option value="C">C</option>
+      <option value="C++">C++</option>
+    </Form.Select>
+        </Form.Group>
+    </Form>        
+
+        
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+        
+            <Form>
+      <Form.Group className="mb-3" id='add_fess_lbl' controlId="exampleForm.ControlInput1">
+        <Form.Label>Mode of Payment:-</Form.Label>
+ <Form.Select id='add_fess_input' onChange={handlepayment} aria-label="Default select example">
+      <option>Choose Payment Mode</option>
+      <option value="Cash">Cash</option>
+      <option value="Debit Card">Debit Card</option>
+      <option value="UPI">UPI</option>
+    </Form.Select>      </Form.Group>
+    </Form>        
+
+        
+        </Col>
+        <Col>
+        
+            <Form>
+      <Form.Group className="mb-3" id='add_fess_lbl' controlId="exampleForm.ControlInput1">
+        <Form.Label>GSTIN</Form.Label>
+        <Form.Control id='add_fess_input' onChange={handlegst} type="text" placeholder="Enter GST Number" />
+      </Form.Group>
+    </Form>        
+
+        
+        </Col>
+        <Col>
+        
+            <Form>
+      <Form.Group className="mb-3" id='add_fess_lbl' controlId="exampleForm.ControlInput1">
+        <Form.Label>Receiver Name:-</Form.Label>
+        <Form.Control id='add_fess_input' onChange={handlename} type="text" placeholder="Enter Student Name" />
+      </Form.Group>
+    </Form>        
+
+        
+        </Col>
+        <Col>
+        
+            <Form>
+      <Form.Group className="mb-3" id='add_fess_lbl' controlId="exampleForm.ControlInput1">
+        <Form.Label>Mobile No-:</Form.Label>
+        <Form.Control id='add_fess_input' onChange={handlemobile} type="number" placeholder="Enter Mobile Number" />
+      </Form.Group>
+    </Form>        
+
+        
+        </Col>
+      </Row>
+
+
+
+
+       <Row>
+        <Col>
+        
+
+    <Form>
+      <Form.Group className="mb-3" id='add_fess_lbl' controlId="exampleForm.ControlInput1">
+        <Form.Label>From Year:-</Form.Label>
+        <Form.Control id='add_fess_input' onChange={handlefromy} type="date" />
+      </Form.Group>
+    </Form>        
+        
+        
+        
+        
+        
+        </Col>
+        <Col>
+        
+            <Form>
+      <Form.Group className="mb-3" id='add_fess_lbl' controlId="exampleForm.ControlInput1">
+        <Form.Label>To Year:-</Form.Label>
+        <Form.Control id='add_fess_input' onChange={handletoyear} type="date"  />
+      </Form.Group>
+    </Form>        
+
+        
+        
+        </Col>
+        <Col>
+        
+            <Form>
+      <Form.Group className="mb-3" id='add_fess_lbl' controlId="exampleForm.ControlInput1">
+        <Form.Label>Amount:-</Form.Label>
+        <Form.Control id='add_fess_input' onChange={handleamount1} type="text" placeholder="Enter Amount" />
+      </Form.Group>
+    </Form>        
+
+        
+        
+        </Col>
+        <Col>
+        
+        
+            <Form>
+      <Form.Group className="mb-3" id='add_fess_lbl' controlId="exampleForm.ControlInput1">
+        <Form.Label>CGST:-</Form.Label>
+        <Form.Control id='add_fess_input' onChange={handlecgstin} value={cgst} type="text"  placeholder="Enter CGST" />
+      </Form.Group>
+    </Form>        
+
+        
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+        
+            <Form>
+      <Form.Group className="mb-3" id='add_fess_lbl' controlId="exampleForm.ControlInput1">
+        <Form.Label>SGST:-</Form.Label>
+        <Form.Control id='add_fess_input' value={sgst} onChange={handlesgstin} type="text" placeholder="Enter SGST" />
+      </Form.Group>
+    </Form>        
+
+        
+        </Col>
+        <Col>
+        
+            <Form>
+      <Form.Group className="mb-3" id='add_fess_lbl' controlId="exampleForm.ControlInput1">
+        <Form.Label>Total Amount:-</Form.Label>
+        <Form.Control id='add_fess_input' value={tolamt} onChange={handletotalamt} type="text" placeholder="Enter Total Amount" />
+      </Form.Group>
+    </Form>        
+
+        
+        </Col>
+        
+        
+        
+      </Row>
+            <Button id='add_fess_btn' onClick={submit} variant="success">Submit</Button>
+
+    </Container> 
+    </div>   
     </>
-  );
+  )
 }

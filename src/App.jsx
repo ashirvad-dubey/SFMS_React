@@ -9,34 +9,45 @@ import Viewstudent from "./Pages/Viewstudent";
 import Viewcourse from "./Pages/Viewcourse";
 import Updatestudent from "./Pages/Updatestudent";
 
-
-function ProtecteRoute({isLogin,children}){
-
-  return isLogin ? children :<Navigate to='/'replace/>;
+function ProtectedRoute({isLoggedIn,children}){
+  return isLoggedIn ? children:<Navigate to="/" replace/>;
 }
-export default function App (){
-const [isLogin, setIsLogin] = useState(localStorage.getItem("isLogin") === "true");
-
+export default function App(){
+ {/*} const[isLoggedIn,setIsLoggedIn]=useState(false);{*/}
+ const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("isLogin") === "true");
   return(
     <>
-    <Router>
-      <Navbr />
-      <Routes>
-        <Route path="/" element={<Login setIsLogin={setIsLogin}/>} />
+<Router>
+<Navbr/>
+<Routes>
 
-        <Route path="/home" element={ <ProtecteRoute isLogin={isLogin}><Home/> </ProtecteRoute>} />
-        <Route path="/addfess" element={ <ProtecteRoute isLogin={isLogin}><Addfess/> </ProtecteRoute>} />
-        <Route path="/viewrecord" element={ <ProtecteRoute isLogin={isLogin}><Viewstudent/> </ProtecteRoute>} />
-        <Route path="/searchrecord" element={ <ProtecteRoute isLogin={isLogin}><Updatestudent/> </ProtecteRoute>} />
-        <Route path="/viewreport" element={ <ProtecteRoute isLogin={isLogin}><Viewcourse/> </ProtecteRoute>} />
-        <Route path="/create" element={<Create/>} />
+<Route path="/" element={<Login setIsLoggedIn={setIsLoggedIn}/>}/>
 
+<Route path="/home" element={<ProtectedRoute isLoggedIn={isLoggedIn}>
+  <Home/> </ProtectedRoute>} />
 
+<Route path="/addfess" element={<ProtectedRoute isLoggedIn={isLoggedIn}>
+  <Addfess/> </ProtectedRoute>} />
 
 
-      </Routes>
-    </Router>
-  
+<Route path="/viewstudent" element={<ProtectedRoute isLoggedIn={isLoggedIn}>
+  <Viewstudent/> </ProtectedRoute>} />
+
+<Route path="/viewcourse" element={<ProtectedRoute isLoggedIn={isLoggedIn}>
+  <Viewcourse/> </ProtectedRoute>} />
+
+<Route path="/updatestudent" element={<ProtectedRoute isLoggedIn={isLoggedIn}>
+  <Updatestudent/> </ProtectedRoute>} />
+
+
+        <Route path="/create" element={<Create/>}  />
+
+</Routes>
+
+</Router>
+
+
     </>
   )
 }

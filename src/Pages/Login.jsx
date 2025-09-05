@@ -1,18 +1,38 @@
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Container from 'react-bootstrap/Container';
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Login.css';
 
-    export default function Login({setIsLogin}){
-const navigate=useNavigate();
-      const[userOrmob,setUserOrMob]=useState('')
-      const[pass,setPass]=useState('')
-      const handlepassword=(e)=>{setPass(e.target.value)}
+export default function Login({setIsLoggedIn}){
+      const navigate=useNavigate();
+      const[userOrmob,setUserOrMob]=useState('');
+      const[pass,setPass]=useState('');
+      const[error,setError]=useState({userOrmob :"",pass:""});
+      const handlepassword=(e)=>{setPass(e.target.value)};
+
+      const Mobilevalidation=()=>{
+        if(!userOrmob)return "Enter Mobile Number";
+        return "";
+      }
+      const PasswordValdation=()=>{
+        if(!pass)return "Enter Password";
+        return "";
+      }
 
 
       const login=(e)=>{
           e.preventDefault();
-        const dt={
+          const mobileerror=Mobilevalidation();
+          const passworderror=PasswordValdation();
+          if(!userOrmob || !pass){
+            setError({userOrmob:mobileerror,pass:passworderror});
+            return;
+          }
+
+          const dt={
           usernameOrmobile:userOrmob,
           password:pass
         }
@@ -23,41 +43,54 @@ const navigate=useNavigate();
               alert("Login Successfully....!✅");
               localStorage.setItem("isLogin","true");
               localStorage.setItem("name", res.data.data.name);
-              setIsLogin(true);
+              setIsLoggedIn(true);
               navigate('/home');
-                window.location.reload();   // 👈 add this
+              window.location.reload();
 
           }else{
-               alert("Login Failed....!❌");}})}
+               alert("Worng Mobile Number and Password....!❌");}})}
 
 
 
-  return (
+      
+
+
+
+
+  return(
     <>
-     <div className="outer-wrapper">
-      <div className="inner-wrapper">
-        <div className="login-box">
-          <div className='login-2-box'>
-            <div className='login-3-box'>
-                <div className='login-4-box'>
-                    <div className='login-5-box'>
+      <div className="outer-wrapper">
+      <Container className="d-flex justify-content-center align-items-center min-vh-100">
+    <div className="inner-wrapper">
+      <div className="login-box">
+             <h2>Welcome to <span>Login</span> Page</h2>
+    <Form>
+      <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+        <Form.Label>Mobile Number</Form.Label>
+        <Form.Control onChange={(e)=>setUserOrMob(e.target.value)} type="text"  maxlength={10}  pattern="\\d{10}" placeholder="Enter Mobile Number" />
+                   {error.userOrmob && <p style={{ color: "red" }}>{error.userOrmob}</p>}
 
-              <h2>Welcome to <span>Login</span> Page</h2>
-        <input onChange={(e)=>setUserOrMob(e.target.value)} type="text" placeholder="Phone Number/User Name" />
-          <input onChange={handlepassword} type="password" placeholder="Password" />
-          <button onClick={login} type='submit' className='sbtn' >Submit</button>
-            </div>
-          </div>
-        </div>
-        <div className="bottom-box">
-          <p>Don't have an account?</p>
-          <button onClick={()=>navigate('/create')} className="create-btn">Create new</button>
-            </div>
-          </div>
-        </div>
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+        <Form.Label>Enter password</Form.Label>
+          <Form.Control onChange={handlepassword} type="password" placeholder="Password" />
+                          {error.pass && <p style={{ color: "red" }}>{error.pass}</p>}
+
+      </Form.Group>
+    </Form>
+          <Button variant="primary" onClick={login} id='sbtn'>Login</Button>
+        <p className="signup-text">
+              Don't have an account?  <span onClick={()=>navigate('/Create')} style={{cursor:"pointer", color:"blue"}}>Sign up</span>
+            </p>
       </div>
     </div>
-    </>
-  );
+        </Container>
 
+      </div>
+
+    
+    
+    
+    </>
+  )
 }

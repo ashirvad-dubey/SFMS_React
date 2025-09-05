@@ -1,13 +1,26 @@
-import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 import { useEffect } from 'react';
+import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Modal from 'react-bootstrap/Modal';
+
+
 import './Search.css'
+import { useState } from 'react';
 import axios from 'axios';
+
 export default function Updatestudent(){
-  const [modleshow, setModleShow] = useState(false);
-  const[modleshowdelte,setModleShowDelete]=useState(false)
+function getId(id,name,course,foryear,toyear,amount){
+  setId(id);setName(name);setCourse(course);setForyear(foryear ? foryear.slice(0, 10) : ""),setToyear(toyear ? toyear.slice(0, 10) : ""),setAmount(amount);
+  
+
+}
+
+  const[modleshowupdate,setModleShowUpdate]=useState(false);
+  const[modleshowdelte,setModleShowDelete]=useState(false);
   const [data,setData]=useState([]);
   const[name,setName]=useState('');
   const[course,setCourse]=useState('');
@@ -15,7 +28,8 @@ export default function Updatestudent(){
   const[toyear,setToyear]=useState('');
   const[amount,setAmount]=useState('');
   const[id,setId]=useState(0)
-    const [srchbr,setSrchbr]=useState('');
+  const [srchbr,setSrchbr]=useState('');
+
 
 const handlename=(e)=>{setName(e.target.value);}
 const handlecourse=(e)=>{setCourse(e.target.value);}
@@ -23,29 +37,32 @@ const handlefor=(e)=>{setForyear(e.target.value);}
 const handleto=(e)=>{setToyear(e.target.value);}
 const handleamt=(e)=>{setAmount(e.target.value);}
 
-function getId(id,name,course,foryear,toyear,amount){
-  setId(id);setName(name);setCourse(course);setForyear(foryear),setToyear(toyear),setAmount(amount);
-  
 
-}
+ 
+  const[error,setError]=useState({name:"",course:"",foryear:"",toyear:"",amount:""});
 
 
-   useEffect(()=>{
-    fatcgdata();
-    
-  },[]);
+const ValidationName=()=>{if(!name){return "Enter Name"}return"";}
+const ValidationCourse=()=>{if(!course){return "Enter Course Name"}return"";}
+const ValidationForyear=()=>{if(!foryear){return "Enter For Date"}return"";}
+const ValidationToyear=()=>{if(!toyear){return "Enetr To Date"}return"";}
+const ValidationAmount=()=>{if(!amount){return "Enter Amount"}return"";}
 
-  const fatcgdata=()=>{
-    axios.get("http://127.0.0.1:3000/studentuser")
-    .then(res =>{ 
-      setData(res.data.data);
 
-    })
-  }
+
 
 
   const update=()=>{
-    const dt={
+    const nameerror=ValidationName();
+    const courseerror=ValidationCourse();
+    const toyearerror=ValidationToyear();
+    const foryearerror=ValidationForyear();
+    const amounterror=ValidationAmount();
+    if(!name || !course || !foryear||!toyear ||!amount){
+      setError({name:nameerror,course:courseerror,foryear:foryearerror,toyear:toyearerror,amount:amounterror})
+      return;
+    }
+     const dt={
       sname:name,
       course:course,
       fromyear:foryear,
@@ -59,37 +76,61 @@ function getId(id,name,course,foryear,toyear,amount){
     if(res.data.status=="200"){
       alert("Update Successfully....!");
           fatcgdata();
+          setModleShow(false);
       
     }else{
              alert("Update Failed....!");
     }})}
-  const del = (id) => {
-  const dt = { id: id };
 
-  axios.delete("http://127.0.0.1:3000/studentdelete", { data: dt })
-    .then(res => {
-      if (res.data.status === 200) {  
-        alert("Delete Successfully....!");
-        fatcgdata();                  
-        setModleShowDelete(false);    
-      } else {
-        alert("Delete Failed....!");
-      }
+
+
+const fatcgdata=()=>{
+    axios.get("http://127.0.0.1:3000/studentuser")
+    .then(res =>{ 
+      setData(res.data.data);
+
     })
-    
-    
-};
+  }
 
-    return(
-        <>
-        <div className="Student-wrapperr">
-             <div className='view'><h1>Update Student Record</h1></div>
-            <input className='search' type="search"placeholder="Search by name roll course"aria-label="Search" value={srchbr} onChange={(e)=>setSrchbr(e.target.value)} />  
 
-<Table striped bordered hover variant="dark">
+  
+   useEffect(()=>{
+    fatcgdata();
+    
+  },[]);
+
+  useEffect(()=>{
+console.log("Modal Open Values:", { name, course, foryear, toyear, amount });
+  },[modleshowupdate])
+
+
+  return(
+    <>
+    {/*}  <Button onClick={setModleShowUpdate} variant="primary">Primary</Button>{*/}
+
+<div className="main-body">
+    <Container>
+             <div className='heading'><h1 style={{color:"black"}}>Update Student Record</h1></div>
+        
+      <Form className="d-flex">
+            <Form.Control
+              type="search"
+              placeholder="Search"
+              className="me-2"
+              id='search'
+              value={srchbr}
+              onChange={(e)=>setSrchbr(e.target.value)}
+              aria-label="Search"
+            />
+                      </Form>
+
+    </Container>    
+
+    <Container>        
+    <Table striped bordered hover variant="dark">
       <thead>
         <tr>
-            <th>Receipt</th>
+          <th>Receipt</th>
            <th>Name</th>
            <th>Roll No</th>
             <th>Course</th>
@@ -109,11 +150,7 @@ function getId(id,name,course,foryear,toyear,amount){
         item.sname.toLowerCase().includes(srchbr.toLowerCase())||
         item.rollno.toLowerCase().includes(srchbr.toLowerCase())||
         item.course.toLowerCase().includes(srchbr.toLowerCase())
-       
-
         )
-        
-        
         .map((item)=>{
             return(<tr>
           <td>{item.receipt}</td>
@@ -127,7 +164,7 @@ function getId(id,name,course,foryear,toyear,amount){
 <td>
   {<Button onClick={() => {
     getId(item.id, item.sname, item.course, item.fromyear, item.toyear, item.amount);
-    setModleShow(true);
+    setModleShowUpdate(true);
   }} variant="warning">Update</Button>}
 </td>
            <td>
@@ -138,13 +175,17 @@ function getId(id,name,course,foryear,toyear,amount){
 
 </td>
         </tr>)})}
-         </tbody></Table>                     
-</div>
+         </tbody>                   
+
+    </Table>        
+    </Container>
+    </div>
 
 
 
-    <Modal
-      show={modleshow} onHide={()=>setModleShow(false)}
+
+  <Modal
+      show={modleshowupdate} onHide={()=>setModleShowUpdate(false)}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
@@ -155,35 +196,55 @@ function getId(id,name,course,foryear,toyear,amount){
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <h4></h4>
-        <p>
-        <label className="form-label">Enter Your name:-</label>
-  <input type="text" onChange={handlename} placeholder="Enter New Name" className="textt" />
-              <label className="form-label">Enter Subject:-</label>
-<select onChange={handlecourse} className="form-select rounded-3 ">
-              <option>Select Subject</option>
-              <option>Java</option>
-              <option>C</option>
-              <option>c++</option>
-              <option>full Strack</option>
-            </select>
-                        <label className="form-label">Enter From Date:-</label>
+       <div className="modal_body">
 
-            <input onChange={handlefor} type="date" className="form-control rounded-3" />
-                        <label className="form-label">Enter From Year:</label>
+    <Form>
+      <Form.Group className="mb-3" id='form_lbl' controlId="exampleForm.ControlInput1">
+        <Form.Label>Name:-</Form.Label>
+        <Form.Control value={name} id='form-input' type="text" onChange={handlename}  placeholder="Enter Name" />
+         {error.name && <p style={{ color: "red" }}>{error.name}</p>}
+      </Form.Group>
+      
+              <Form.Label id='form_lbl'>Enter Subject</Form.Label>
+    <Form.Select id='form-input' value={course} onChange={handlecourse}  aria-label="Default select example">
+      <option value="">Select Subject</option>
+      <option value="Java">Java</option>
+      <option value="C">C</option>
+      <option value="C++">C++</option>
+      <option value="Full Strack">Full Strack</option>
+    </Form.Select>
+          {error.course && <p style={{ color: "red" }}>{error.course}</p>}
 
-            <input onChange={handleto} type="date" className="form-control rounded-3" />
-                        <label className="form-label">Enter New Amount-</label>
 
-  <input type="text"onChange={handleamt}  placeholder="Enter New Amount" className="textt" />
+      <Form.Group className="mb-3" id='form_lbl' controlId="exampleForm.ControlInput1">
+        <Form.Label>Enter From Date</Form.Label>
+        <Form.Control id='form-input' value={foryear} onChange={handlefor}  type="date"/>
+      </Form.Group>
+        {error.foryear && <p style={{ color: "red" }}>{error.foryear}</p>}
 
-        </p>
+       <Form.Group className="mb-3" id='form_lbl' controlId="exampleForm.ControlInput1">
+        <Form.Label>Enter To Date</Form.Label>
+        <Form.Control id='form-input' value={toyear} onChange={handleto} type="date"/>
+      </Form.Group>
+          {error.toyear && <p style={{ color: "red" }}>{error.toyear}</p>}
+
+
+<Form.Group className="mb-3" id='form_lbl' controlId="exampleForm.ControlInput1">
+        <Form.Label>Enter Amount </Form.Label>
+        <Form.Control id='form-input' value={amount} onChange={handleamt} type="number" placeholder='Enter Amount'/>
+      </Form.Group>
+                {error.amount && <p style={{ color: "red" }}>{error.amount}</p>}
+
+    </Form>
+</div>
       </Modal.Body>
       <Modal.Footer>
-        <Button style={{width:"20%",borderRadius: "30px",padding:".5rem" ,fontSize:"1.2rem"}} onClick={()=>setModleShow(false)}>Close</Button>
+        <Button style={{width:"20%",borderRadius: "30px",padding:".5rem" ,fontSize:"1.2rem"}} onClick={()=>setModleShowUpdate(false)}>Close</Button>
       <Button style={{width:"20%",borderRadius: "30px",padding:".5rem" ,fontSize:"1.2rem"}} onClick={update} variant="warning">Update</Button>
       </Modal.Footer>
     </Modal>
+
+
 {/*}Delete Modle{*/}
 <Modal
       show={modleshowdelte} onHide={() => setModleShowDelete(false)}
@@ -209,7 +270,6 @@ function getId(id,name,course,foryear,toyear,amount){
 
 
 
-
-        </>
-    )
+    </>
+  )
 }

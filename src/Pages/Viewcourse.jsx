@@ -5,6 +5,13 @@ import Modal from 'react-bootstrap/Modal';
 import './Viewrecord.css'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import './Search.css'
+
+
 
 export default function Viewcourse(){
     const [modalShowadd, setModalShowAdd] = useState(false);
@@ -13,10 +20,14 @@ export default function Viewcourse(){
     const [data,setData]=useState([]);
     const[cname,setCname]=useState('');
     const[price,setPrice]=useState('');
-  const [srchbr,setSrchbr]=useState('');
+    const [srchbr,setSrchbr]=useState('');
+    const[error,setError]=useState({cname:"",price:""});
     const[id,setId]=useState(0)
     const handlecoursename=(e)=>{setCname(e.target.value)}
     const handlecourseprice=(e)=>{setPrice(e.target.value)}
+    const courseValidation=()=>{if(!cname){return "Enter Course Name"}return "";}
+    const priceValidation=()=>{if(!price){return "Enter Course Price"}return "";}
+
 
 function getId(id,cname,price){
   setId(id),setCname(cname),setPrice(price);
@@ -40,6 +51,12 @@ const getcourse=()=>{
 
 
 const addData=()=>{
+  const courseerror=courseValidation();
+  const priceerror=priceValidation();
+  if(!cname || !price){
+    setError({cname:courseerror,price:priceerror})
+    return;
+  }
   const dt={
     cname:cname,
     cprice:price
@@ -61,6 +78,12 @@ const addData=()=>{
 }
 
 const cupdt=()=>{
+  const courseerror=courseValidation();
+  const priceerror=priceValidation();
+  if(!cname || !price){
+    setError({cname:courseerror,price:priceerror})
+    return;
+  }
 const dt={
   cname:cname,
   cprice:price,
@@ -96,10 +119,25 @@ axios.put('http://127.0.0.1:3000/updtcourse',dt)
 
     return(
         <>
-            <div className="Student-wrapperr">
-             <div className='view'><h1>View All Course</h1></div>
-   <input className='search' type="search"placeholder="Search by course"aria-label="Search" value={srchbr} onChange={(e)=>setSrchbr(e.target.value)} />  
 
+     <div className="Student-wrapperr">
+    <Container>
+        <div className='heading'><h1>View All Course</h1></div>
+
+          <Form className="d-flex">
+            <Form.Control
+              type="search"
+              placeholder="Search"
+              className="me-2"
+              id='search'
+              value={srchbr}
+              onChange={(e)=>setSrchbr(e.target.value)}
+              aria-label="Search"
+            />
+                      </Form>
+
+    </Container>
+    <Container>
     <Table striped bordered hover variant="dark">
       <thead>
         <tr>
@@ -144,7 +182,9 @@ axios.put('http://127.0.0.1:3000/updtcourse',dt)
 </td>
 
         </tr>)})}
-         </tbody></Table>                     
+         </tbody></Table> 
+    </Container>
+
             </div>
 
 
@@ -160,20 +200,27 @@ axios.put('http://127.0.0.1:3000/updtcourse',dt)
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <h4 style={{color:"red"}}>ADD COURSE FROM......!</h4>
-        <p>
-              <label className="form-label">Enter Subject:-</label>
-<select onChange={handlecoursename} className="form-select rounded-3 ">
-              <option>Select Course</option>
-              <option>Java</option>
-              <option>C</option>
-              <option>c++</option>
-              <option>full Strack</option>
-            </select>
+         <div className="modal_body">
+    <Form> 
+    <Form.Label id='form_lbl'>Enter Subject</Form.Label>
+    <Form.Select id='form-input' value={cname}  onChange={handlecoursename}  aria-label="Default select example">
+      <option value="">Select Subject</option>
+      <option value="Java">Java</option>
+      <option value="C">C</option>
+      <option value="C++">C++</option>
+      <option value="Full Strack">Full Strack</option>
+    </Form.Select>
+          {error.cname && <p style={{ color: "red" }}>{error.cname}</p>}
 
-            <label className="form-label">Enter Course Prices:-</label>
-  <input type="text"onChange={handlecourseprice}  placeholder="Enter New Prices" className="textt" />
-        </p>
+       <Form.Group className="mb-3" id='form_lbl' controlId="exampleForm.ControlInput1">
+        <Form.Label>Amount:-</Form.Label>
+        <Form.Control  id='form-input' type="text" onChange={handlecourseprice}  placeholder="Enter Amount" />
+         {error.price && <p style={{ color: "red" }}>{error.price}</p>}
+      </Form.Group>
+     
+
+    </Form>
+</div>      
       </Modal.Body>
       <Modal.Footer>
         <Button style={{width:"30%",borderRadius: "30px",padding:".5rem" ,fontSize:"1.2rem"}} onClick={()=>setModalShowAdd(false)}>Close</Button>
@@ -195,20 +242,30 @@ axios.put('http://127.0.0.1:3000/updtcourse',dt)
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <h4>COURSE UPDATE.....!</h4>
-        <p>
-              <label className="form-label">Enter Subject:-</label>
-<select onChange={handlecoursename} className="form-select rounded-3 ">
-              <option>Select Subject</option>
-              <option>Java</option>
-              <option>C</option>
-              <option>c++</option>
-              <option>full Strack</option>
-            </select>
 
-                    <label className="form-label">Enter Your name:-</label>
-  <input type="text"  onChange={handlecourseprice} placeholder="Enter New Price" className="textt" />
-        </p>
+
+<div className="modal_body">
+    <Form> 
+    <Form.Label id='form_lbl'>Enter Subject</Form.Label>
+    <Form.Select id='form-input' value={cname} onChange={handlecoursename}  aria-label="Default select example">
+      <option value="">Select Subject</option>
+      <option value="Java">Java</option>
+      <option value="C">C</option>
+      <option value="C++">C++</option>
+      <option value="Full Strack">Full Strack</option>
+    </Form.Select>
+          {error.cname && <p style={{ color: "red" }}>{error.cname}</p>}
+
+       <Form.Group className="mb-3" id='form_lbl' controlId="exampleForm.ControlInput1">
+        <Form.Label>Amount:-</Form.Label>
+        <Form.Control  id='form-input' type="text" onChange={handlecourseprice}  placeholder="Enter Amount" />
+         {error.price && <p style={{ color: "red" }}>{error.price}</p>}
+      </Form.Group>
+     
+
+    </Form>
+</div>   
+
       </Modal.Body>
       <Modal.Footer>
         <Button style={{width:"30%",borderRadius: "30px",padding:".5rem" ,fontSize:"1.2rem"}} onClick={()=>setModalShowUpdt(false)}>Close</Button>
