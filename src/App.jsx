@@ -13,7 +13,6 @@ function ProtectedRoute({isLoggedIn,children}){
   return isLoggedIn ? children:<Navigate to="/" replace/>;
 }
 export default function App(){
- {/*} const[isLoggedIn,setIsLoggedIn]=useState(false);{*/}
  const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem("isLogin") === "true");
   return(

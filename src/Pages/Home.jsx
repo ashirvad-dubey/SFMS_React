@@ -90,6 +90,9 @@ export default function Home(){
         </Col>
       </Row>
 </div>
+<small style={{marginTop:"8px",fontSize:"20px",color:"#666",fontFamily:"cursive"}}>
+          © 2025 Ashirvad Kumar Dubey. All Rights Reserved.
+        </small>
 </div>
     </Container>
     </>
