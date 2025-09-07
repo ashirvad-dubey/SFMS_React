@@ -92,7 +92,7 @@ const dt={
 
 }
 
-        axios.post("http://127.0.0.1:3000/studentadd",dt)
+        axios.post("https://mrnvtjxesvxfaqwryqqn.functions.supabase.co/sfms-api/studentadd",dt)
         .then(res=>{
           if(res.data.status=="200"){
               alert("Insert Successfully....!");
@@ -103,7 +103,7 @@ const dt={
 
 
 useEffect(()=>{
-  axios.get("http://127.0.0.1:3000/letest")
+  axios.get("https://mrnvtjxesvxfaqwryqqn.functions.supabase.co/sfms-api/letest")
   .then(res=>{
     setRoll(res.data.rollno);
     setRecpt(res.data.receipt);

@@ -67,7 +67,7 @@ const Insertdat=(e)=>{
     confirmpassword:cpass,
     mobile:mobile}
 
-  axios.post("http://127.0.0.1:3000/adduser",dt)
+  axios.post("https://mrnvtjxesvxfaqwryqqn.functions.supabase.co/sfms-api/adduser",dt)
   .then(res=>{
     if(res.data.status==200){
       alert("Create Successfully....!✅");

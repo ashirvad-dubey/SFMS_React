@@ -56,9 +56,14 @@ color:black;
 font-size: 1.2rem;
 }
 .addstudent{
-  width: 60%;
-  padding: .4rem;
+  width: 50%;
+  padding: .5rem;
   border-radius: 25px;
   color: black;
   font-size: 1.5rem;
+  border: white;
+      box-shadow: inset 0 0 1px rgb(253, 252, 252);
+        border: 2px solid white;
+
+
 }

@@ -37,7 +37,7 @@ function getId(id,cname,price){
 
 
 const getcourse=()=>{
-  axios.get("http://127.0.0.1:3000/courseuser")
+  axios.get("https://mrnvtjxesvxfaqwryqqn.functions.supabase.co/sfms-api/courseuser")
   .then(res=>{
    // console.log(res.data);
    setData(res.data.data);
@@ -61,7 +61,7 @@ const addData=()=>{
     cname:cname,
     cprice:price
   }
-  axios.post('http://127.0.0.1:3000/addcourse',dt)
+  axios.post('https://mrnvtjxesvxfaqwryqqn.functions.supabase.co/sfms-api/addcourse',dt)
   .then(res=>{
     if(res.data.status=="200"){
       alert("Insert Sucessfully");
@@ -91,7 +91,7 @@ const dt={
 
 
 }
-axios.put('http://127.0.0.1:3000/updtcourse',dt)
+axios.put('https://mrnvtjxesvxfaqwryqqn.functions.supabase.co/sfms-api/updtcourse',dt)
 .then(res=>{
   if(res.data.status=="200"){
       alert("Update Successfully....!");
@@ -105,7 +105,7 @@ axios.put('http://127.0.0.1:3000/updtcourse',dt)
      const cdlt=()=>{
       const dt={id:id};
 
-      axios.delete('http://127.0.0.1:3000/dletecourse',{data:dt})
+      axios.delete('https://mrnvtjxesvxfaqwryqqn.functions.supabase.co/sfms-api/dletecourse',{data:dt})
       .then(res=>{
         if(res.data.status===200){
           alert("sucesss");
@@ -119,12 +119,21 @@ axios.put('http://127.0.0.1:3000/updtcourse',dt)
 
     return(
         <>
+    <div className="heading">
 
-     <div className="Student-wrapperr">
     <Container>
-        <div className='heading'><h1>View All Course</h1></div>
 
-          <Form className="d-flex">
+ 
+      <Row>
+        
+        <Col  sm={8}><h1>View All Course</h1></Col>
+        <Col sm={4}>
+        
+        <Button className='addstudent'onClick={(e)=>{setModalShowAdd(true);}}  variant="info"><b>Add Student</b></Button>
+        </Col>
+      </Row>
+     
+<Form className="d-flex">
             <Form.Control
               type="search"
               placeholder="Search"
@@ -136,7 +145,16 @@ axios.put('http://127.0.0.1:3000/updtcourse',dt)
             />
                       </Form>
 
+
+
+
+
+          
     </Container>
+    </div>
+
+         <div className="Student-wrapperr">
+
     <Container>
     <Table striped bordered hover variant="dark">
       <thead>
@@ -145,7 +163,6 @@ axios.put('http://127.0.0.1:3000/updtcourse',dt)
             <th>Course Id</th>
             <th>Course Name</th>
              <th>Course Price</th>
-            <th>Add Student</th>
             <th>Update Course</th>
             <th>Delete Course</th>
         </tr>
@@ -169,8 +186,7 @@ axios.put('http://127.0.0.1:3000/updtcourse',dt)
           <td>{item.cname}</td>
           <td>{item.cprice}</td>
           
-<td>{<Button className='courebtn' onClick={()=>{setModalShowAdd(true);}}
-              variant="success">Add Course</Button>}</td>
+
            <td><Button onClick={()=>{getId(item.id,item.cname,item.price);setModalShowUpdt(true);}}
            variant="warning">Update</Button>
 

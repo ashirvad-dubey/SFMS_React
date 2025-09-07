@@ -71,7 +71,7 @@ const ValidationAmount=()=>{if(!amount){return "Enter Amount"}return"";}
       id:id
     }
 
-  axios.put("http://127.0.0.1:3000/studentupdt",dt)
+  axios.put("https://mrnvtjxesvxfaqwryqqn.functions.supabase.co/sfms-api/studentupdt",dt)
   .then(res=>{
     if(res.data.status=="200"){
       alert("Update Successfully....!");
@@ -85,7 +85,7 @@ const ValidationAmount=()=>{if(!amount){return "Enter Amount"}return"";}
 
 
 const fatcgdata=()=>{
-    axios.get("http://127.0.0.1:3000/studentuser")
+    axios.get("https://mrnvtjxesvxfaqwryqqn.functions.supabase.co/sfms-api/student")
     .then(res =>{ 
       setData(res.data.data);
 
@@ -106,7 +106,6 @@ console.log("Modal Open Values:", { name, course, foryear, toyear, amount });
 
   return(
     <>
-    {/*}  <Button onClick={setModleShowUpdate} variant="primary">Primary</Button>{*/}
 
 <div className="main-body">
     <Container>

@@ -36,7 +36,7 @@ export default function Login({setIsLoggedIn}){
           usernameOrmobile:userOrmob,
           password:pass
         }
-        axios.post("http://127.0.0.1:3000/login",dt)
+        axios.post("https://mrnvtjxesvxfaqwryqqn.functions.supabase.co/sfms-api/login",dt)
         .then(res=>{
           if(res.data.status=="200")
           {

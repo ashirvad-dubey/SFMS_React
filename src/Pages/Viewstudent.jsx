@@ -15,9 +15,8 @@ export default function Viewrecord(){
   const navigate=useNavigate();
   const [search,setSearch]=useState('');
 
-
     const GetTable=()=>{
-      axios.get("http://127.0.0.1:3000/studentuser")
+      axios.get("https://mrnvtjxesvxfaqwryqqn.functions.supabase.co/sfms-api/student")
       .then(res=>{
         setData(res.data.data);
         console.log(res.data.data);
