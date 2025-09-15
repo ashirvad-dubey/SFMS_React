@@ -10,9 +10,9 @@ import axios from 'axios';
 
 
 
-export default function Viewrecord(){
+export default function Viewstudent(){
   const[data,setData]=useState([]);
-  const navigate=useNavigate();
+      const navigate=useNavigate();
   const [search,setSearch]=useState('');
 
     const GetTable=()=>{

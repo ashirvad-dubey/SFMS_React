@@ -129,7 +129,7 @@ axios.put('https://mrnvtjxesvxfaqwryqqn.functions.supabase.co/sfms-api/updtcours
         <Col  sm={8}><h1>View All Course</h1></Col>
         <Col sm={4}>
         
-        <Button className='addstudent'onClick={(e)=>{setModalShowAdd(true);}}  variant="info"><b>Add Student</b></Button>
+        <Button className='addstudent'onClick={(e)=>{setModalShowAdd(true);}}  variant="info"><b>Add Course</b></Button>
         </Col>
       </Row>
      
@@ -304,7 +304,7 @@ axios.put('https://mrnvtjxesvxfaqwryqqn.functions.supabase.co/sfms-api/updtcours
       <Modal.Body>
         <h4></h4>
         <p style={{color:"red", fontWeight: "bold"}}>
-  Are you sure you want to delete this student record?
+  Are you sure you want to delete this Course record?
 </p>
       </Modal.Body>
       <Modal.Footer>
